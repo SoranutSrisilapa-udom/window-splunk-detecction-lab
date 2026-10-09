@@ -53,6 +53,28 @@ Encoded PowerShell and port-scanning alerts identify activity that requires inve
 
 The detections were validated against specific lab tests. Broader coverage, false-positive tuning, and production readiness were not established.
 
+## Detection searches
+
+The SPL files below contain the searches used in this lab.
+
+| Detection | Search file | Logic |
+|---|---|---|
+| Repeated failed logons | [View SPL](detections/repeated-failed-logons.spl) | At least 5 failed logons per host, domain, and account within 15 minutes. |
+| Encoded PowerShell command | [View SPL](detections/powershell-encoded-command.spl) | Sysmon process creation events containing powershell.exe and the full -EncodedCommand parameter. |
+| Possible TCP port scan | [View SPL](detections/possible-tcp-port-scan.spl) | Blocked TCP traffic to at least 20 distinct destination ports on WIN11-01 from one source IP within 15 minutes. |
+
+### Using these searches
+
+These searches use the lab index `soclab`, host `WIN11-01`,
+and a rolling 15-minute time window. The TCP scan search also
+uses the lab destination IP `192.168.56.20`.
+
+To investigate the historical events shown in the screenshots,
+remove `earliest=-15m latest=now` and select the corresponding
+date and time range in Splunk.
+
+These files document search logic. Scheduled alerts must be
+configured separately in Splunk.
 ## Project evidence
 
 ### Security monitoring dashboard

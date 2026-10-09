@@ -1,0 +1,10 @@
+index=soclab host="WIN11-01" EventCode=4625 earliest=-15m latest=now
+| fillnull value="unknown" TargetDomainName
+| stats count AS failed_attempts
+    values(IpAddress) AS source_ips
+    values(LogonType) AS logon_types
+    min(_time) AS first_seen
+    max(_time) AS last_seen
+    by host TargetDomainName TargetUserName
+| where failed_attempts >= 5
+| convert ctime(first_seen) ctime(last_seen)

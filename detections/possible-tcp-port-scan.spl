@@ -1,0 +1,14 @@
+index=soclab host="WIN11-01" source="*Security" EventCode=5152 earliest=-15m latest=now
+| rex field=_raw "<Data Name=['\"]SourceAddress['\"]>(?<scan_src_ip>[^<]+)"
+| rex field=_raw "<Data Name=['\"]DestAddress['\"]>(?<scan_dest_ip>[^<]+)"
+| rex field=_raw "<Data Name=['\"]DestPort['\"]>(?<scan_dest_port>[^<]+)"
+| rex field=_raw "<Data Name=['\"]Protocol['\"]>(?<scan_protocol>[^<]+)"
+| search scan_dest_ip="192.168.56.20" scan_protocol="6"
+| stats count AS blocked_events
+    dc(scan_dest_port) AS unique_dest_ports
+    values(scan_dest_port) AS destination_ports
+    min(_time) AS first_seen
+    max(_time) AS last_seen
+    by host scan_src_ip scan_dest_ip
+| where unique_dest_ports >= 20
+| convert ctime(first_seen) ctime(last_seen)

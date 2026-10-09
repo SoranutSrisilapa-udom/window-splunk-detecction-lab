@@ -53,6 +53,14 @@ Encoded PowerShell and port-scanning alerts identify activity that requires inve
 
 The detections were validated against specific lab tests. Broader coverage, false-positive tuning, and production readiness were not established.
 
+## Final report
+
+[Read the full Splunk lab report (PDF)](Splunk_Lab_Final_Report.pdf)
+
+The report documents the lab architecture, Windows log collection,
+three detection scenarios, test results, troubleshooting, and limitations.
+It includes screenshots supporting the recorded findings.
+
 ## Detection searches
 
 The SPL files below contain the searches used in this lab.

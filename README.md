@@ -52,3 +52,37 @@ This was a learning environment, not a production SOC. Tests used systems under 
 Encoded PowerShell and port-scanning alerts identify activity that requires investigation; they do not by themselves prove malicious intent. The PowerShell test was benign, and the scan was authorized.
 
 The detections were validated against specific lab tests. Broader coverage, false-positive tuning, and production readiness were not established.
+
+## Project evidence
+
+### Security monitoring dashboard
+
+The dashboard displays failed logons, failed logons over time,
+encoded PowerShell activity, and blocked TCP scan activity.
+
+The selected historical window shows 405 blocked events across
+98 distinct destination ports.
+
+![Splunk security monitoring dashboard](splunk-dashboard.png)
+
+### TCP scan investigation
+
+The search results show 206 blocked events across 98 distinct
+destination ports, from Kali at 192.168.56.30 to WIN11-01
+at 192.168.56.20.
+
+The recorded activity occurred on 20 September 2026 between
+15:55:33.682 and 15:55:37.019 UTC.
+
+![TCP scan investigation results](tcp-scan-results.png)
+
+### Scheduled alert
+
+The "Possible TCP Port Scan - WIN11-01" alert appears in
+Triggered Alerts at 16:10:00 UTC on 20 September 2026.
+
+The saved alert results refer to the earlier 15:55 scan.
+The alert execution time differs from the event timestamps.
+
+![Triggered TCP scan alert](tcp-scan-alert.png)
+

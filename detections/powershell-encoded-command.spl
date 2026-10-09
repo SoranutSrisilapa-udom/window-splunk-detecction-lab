@@ -1,0 +1,3 @@
+index=soclab host="WIN11-01" source="*Sysmon*" EventCode=1 earliest=-15m latest=now Image="*powershell.exe" CommandLine="*-EncodedCommand*"
+| table _time host User Image CommandLine ParentImage ProcessId
+| sort - _time
